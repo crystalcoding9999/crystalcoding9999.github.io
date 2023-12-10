@@ -72,7 +72,7 @@
             var profit = payingInput.value - (requiredMaltInput.value * maltCost);
             profitLabel.innerHTML = profit;
 
-            profitPerMaltLabel.innerHTML = profit / requiredMaltInput.value;
+            profitPerMaltLabel.innerHTML = Math.round(((profit / requiredMaltInput.value) + Number.EPSILON) * 100) / 100;
         }
     </script>
 
