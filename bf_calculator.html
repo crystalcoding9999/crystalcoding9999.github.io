@@ -30,7 +30,6 @@
     </style>
 </head>
 <body>
-    <div id="content">
     <h1 class="text-center">Beer Factory Calculator</h1>
     <form>
         <div class="mb-3">
@@ -68,31 +67,6 @@
             // Calculate profit and update label
             var profit = payingInput.value - (requiredMaltInput.value * maltCost);
             profitLabel.innerHTML = profit;
-        }
-    </script>
-    </div>
-
-    <script>
-        var requirePassword = false;
-
-        var password = "beer factory is cool";
-    
-        function checkPassword() {
-            var enteredPassword = prompt("Enter the password:");
-    
-            if (enteredPassword === password) {
-                document.getElementById('content').style.display = 'block';
-            } else {
-                alert("Incorrect password. Access denied.");
-
-                document.getElementById('content').style.display = 'none';
-            }
-        }
-        
-        if (requirePassword) {
-            checkPassword();
-        } else {
-            document.getElementById('content').style.display = 'block';
         }
     </script>
 
