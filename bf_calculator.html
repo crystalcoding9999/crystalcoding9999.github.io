@@ -20,7 +20,7 @@
         label {
             font-weight: bold;
         }
-        #profitLabel {
+        .profit {
             font-size: 24px;
             font-weight: bold;
             color: green;
@@ -45,13 +45,17 @@
             <label class="form-check-label" for="UseCrushed">Use Crushed Malt</label>
         </div>
         <label for="profitLabel">Amount Of Profit:</label>
-        <span id="profitLabel">0</span>
+        <span id="profitLabel" class="profit">0</span>
+
+        <label for="profitPerMalt">Profit Per Bag:</label>
+        <span id="profitPerMalt" class="profit">0</span>
     </form>
 
     <script>
         var requiredMaltInput = document.getElementById("requiredMalt");
         var payingInput = document.getElementById("Paying");
         var profitLabel = document.getElementById("profitLabel");
+        var profitPerMaltLabel = document.getElementById("profitPerMalt");
         var useCrushedBox = document.getElementById("UseCrushed");
 
         var maltCost = 20;
@@ -67,6 +71,8 @@
             // Calculate profit and update label
             var profit = payingInput.value - (requiredMaltInput.value * maltCost);
             profitLabel.innerHTML = profit;
+
+            profitPerMaltLabel.innerHTML = profit / requiredMaltInput.value;
         }
     </script>
 
