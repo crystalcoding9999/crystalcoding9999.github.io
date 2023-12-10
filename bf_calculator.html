@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beer Factory Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+        }
+        #profitLabel {
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+    <h1 class="text-center">Beer Factory Calculator</h1>
+    <form>
+        <div class="mb-3">
+            <label for="requiredMalt" class="form-label">Amount Of Malt</label>
+            <input type="number" class="form-control" id="requiredMalt" name="requiredMalt" min="0" value="0">
+        </div>
+        <div class="mb-3">
+            <label for="Paying" class="form-label">Paying Amount</label>
+            <input type="number" class="form-control" id="Paying" name="Paying" min="0" value="0">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="UseCrushed">
+            <label class="form-check-label" for="UseCrushed">Use Crushed Malt</label>
+        </div>
+        <label for="profitLabel">Amount Of Profit:</label>
+        <span id="profitLabel">0</span>
+    </form>
+
+    <script>
+        var requiredMaltInput = document.getElementById("requiredMalt");
+        var payingInput = document.getElementById("Paying");
+        var profitLabel = document.getElementById("profitLabel");
+        var useCrushedBox = document.getElementById("UseCrushed");
+
+        var maltCost = 20;
+
+        requiredMaltInput.addEventListener('change', updateProfitLabel);
+        payingInput.addEventListener('change', updateProfitLabel);
+        useCrushedBox.addEventListener('change', updateProfitLabel);
+
+        function updateProfitLabel() {
+            // Use ternary operator for assignment based on checkbox state
+            maltCost = useCrushedBox.checked ? 20 : 10;
+
+            // Calculate profit and update label
+            var profit = payingInput.value - (requiredMaltInput.value * maltCost);
+            profitLabel.innerHTML = profit;
+        }
+    </script>
+    </div>
+
+    <script>
+        var requirePassword = false;
+
+        var password = "beer factory is cool";
+    
+        function checkPassword() {
+            var enteredPassword = prompt("Enter the password:");
+    
+            if (enteredPassword === password) {
+                document.getElementById('content').style.display = 'block';
+            } else {
+                alert("Incorrect password. Access denied.");
+
+                document.getElementById('content').style.display = 'none';
+            }
+        }
+        
+        if (requirePassword) {
+            checkPassword();
+        } else {
+            document.getElementById('content').style.display = 'block';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
