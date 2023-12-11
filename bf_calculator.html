@@ -88,7 +88,7 @@
                 <input type="checkbox" id="UseCustomPrice" class="form-check-input">
                 <label for="UseCustomPrice" class="form-check-label">Use Custom Price</label>
                 <div class="mb-3" id="CustomPrice">
-                    <input type="number" class="form-control" id="CustomPriceInput" min="0" value="10" style="display: none;">
+                    <input type="number" class="form-control" id="CustomPriceInput" min="1" value="10" style="display: none;">
                 </div>
             </div>
             <label for="profitLabel">Amount Of Profit:</label>
@@ -135,6 +135,17 @@
         }
 
         function updateProfitLabel() {
+
+            if (requiredMaltInput.value === "") {
+                requiredMaltInput.value = 0;
+            }
+            if (payingInput.value === "") {
+                payingInput.value = 0;
+            }
+            if (CustomPriceInput.value === "") {
+                CustomPriceInput.value = 1;
+            }
+
             // Calculate profit and update label
             var profit = payingInput.value - (requiredMaltInput.value * maltCost);
             profitLabel.innerHTML = profit;
