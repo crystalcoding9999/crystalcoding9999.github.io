@@ -27,52 +27,99 @@
             display: block;
             margin-top: 10px;
         }
+
+        .container {
+            display: flex;
+            /* Additional styling for demonstration */
+            flex-wrap: wrap;
+        }
+
+        .maltContractCalculator, .beerToBottleCalculator {
+            width: 50%; /* Adjust the width as needed */
+            padding: 20px;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .maltContractCalculator, .beerToBottleCalculator {
+                width: 100%; /* Make them full width on smaller screens */
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <h1 class="text-center">Beer Factory Calculator</h1>
-    <form>
-        <div class="mb-3">
-            <label for="requiredMalt" class="form-label">Amount Of Malt</label>
-            <input type="number" class="form-control" id="requiredMalt" name="requiredMalt" min="0" value="0">
-        </div>
-        <div class="mb-3">
-            <label for="Paying" class="form-label">Paying Amount</label>
-            <input type="number" class="form-control" id="Paying" name="Paying" min="0" value="0">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="UseCrushed">
-            <label class="form-check-label" for="UseCrushed">Use Crushed Malt</label>
-        </div>
-        <label for="profitLabel">Amount Of Profit:</label>
-        <span id="profitLabel" class="profit">0</span>
+    <div class="container">
+        <form name="maltContractCalculator" class="maltContractCalculator">
+            <h5>Malt Contract Calculator</h3>
+            <div class="dropdown-divider"></div>
+            <div class="mb-3">
+                <label for="requiredMalt" class="form-label">Amount Of Malt</label>
+                <input type="number" class="form-control" id="requiredMalt" name="requiredMalt" min="0" value="0">
+            </div>
+            <div class="mb-3">
+                <label for="Paying" class="form-label">Paying Amount</label>
+                <input type="number" class="form-control" id="Paying" name="Paying" min="0" value="0">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="UseCrushed">
+                <label class="form-check-label" for="UseCrushed">Use Crushed Malt</label>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" id="UseCustomPrice" class="form-check-input">
+                <label for="UseCustomPrice" class="form-check-label">Use Custom Price</label>
+                <div class="mb-3" id="CustomPrice">
+                    <input type="number" class="form-control" id="CustomPriceInput" min="0" value="10" style="display: none;">
+                </div>
+            </div>
+            <label for="profitLabel">Amount Of Profit:</label>
+            <span id="profitLabel" class="profit">0</span>
 
-        <label for="profitPerMalt">Profit Per Bag:</label>
-        <span id="profitPerMalt" class="profit">0</span>
-    </form>
+            <label for="profitPerMalt">Profit Per Bag:</label>
+            <span id="profitPerMalt" class="profit">0</span>
+        </form>
+    </div>
 
     <script>
+        // Malt Contract Calculator Script
         var requiredMaltInput = document.getElementById("requiredMalt");
         var payingInput = document.getElementById("Paying");
         var profitLabel = document.getElementById("profitLabel");
         var profitPerMaltLabel = document.getElementById("profitPerMalt");
         var useCrushedBox = document.getElementById("UseCrushed");
 
+        var UseCustomPrice = document.getElementById("UseCustomPrice")
+        var CustomPriceInput = document.getElementById("CustomPriceInput")
+
         var maltCost = 20;
 
         requiredMaltInput.addEventListener('change', updateProfitLabel);
         payingInput.addEventListener('change', updateProfitLabel);
-        useCrushedBox.addEventListener('change', updateProfitLabel);
+        useCrushedBox.addEventListener('change', updateMaltPrice);
+
+        UseCustomPrice.addEventListener('change', updateMaltPrice);
+        CustomPriceInput.addEventListener('change', updateMaltPrice);
+
+        function updateMaltPrice() {
+            if (UseCustomPrice.checked) {
+                CustomPriceInput.style.display = "block";
+                maltCost = Number(CustomPriceInput.value); // Access 'value' instead of 'innerHTML'
+
+                useCrushedBox.checked = maltCost == 20;
+            } else {
+                CustomPriceInput.style.display = "none";
+                maltCost = useCrushedBox.checked ? 20 : 10;
+            }
+            updateProfitLabel();
+        }
 
         function updateProfitLabel() {
-            // Use ternary operator for assignment based on checkbox state
-            maltCost = useCrushedBox.checked ? 20 : 10;
-
             // Calculate profit and update label
             var profit = payingInput.value - (requiredMaltInput.value * maltCost);
             profitLabel.innerHTML = profit;
 
-            profitPerMaltLabel.innerHTML = Math.round(((profit / requiredMaltInput.value) + Number.EPSILON) * 100) / 100;
+            profitPerMaltLabel.innerHTML = (Math.round(((profit / requiredMaltInput.value) + Number.EPSILON) * 100) / 100) || 0;
         }
     </script>
 
